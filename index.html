@@ -1737,7 +1737,7 @@ function stockAdj(s,dir){var S=stk(),ch=0;s.it.forEach(function(i){if(!isMob(i))
 var LOT=[],LOTN=-1,LOTU=null,LOTT=null;
 function lotRd(){var M={};try{M=JSON.parse(localStorage.getItem('gc_lreq'))||{}}catch(e){}LOT=Object.keys(M).map(function(k){return M[k]});lotR()}
 function lotInit(){if(LOTU){LOTU();LOTU=null}clearInterval(LOTT);
- if(FB)LOTU=FB.db.collection('lreq').onSnapshot(function(q){LOT=q.docs.map(function(d){return d.data()});lotR()},function(){});
+ if(FB)LOTU=FB.db.collection('lreq').onSnapshot(function(q){LOT=q.docs.map(function(d){return d.data()});lotR()},function(){LOTT=setTimeout(function(){if($q('ad').classList.contains('o'))lotInit()},3000)});
  else{lotRd();LOTT=setInterval(function(){if($q('ad').classList.contains('o'))lotRd()},4000)}}
 function lotR(){var W=LOT.filter(function(x){return x.st=='wait'}).length,a=document.querySelector('#ad .adn a[data-t=lot]');
  if(a)a.textContent='🔔 Login OTP'+(W?' ('+W+')':'');
@@ -1759,7 +1759,7 @@ function lotDel(m){if(FB){FB.db.collection('lreq').doc(m).delete().catch(functio
 $q('ad-lot').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(b.dataset.lo){lotSend(b.dataset.lo);return}if(b.dataset.lx&&confirm('Ye request hata dein?'))lotDel(b.dataset.lx)});
 function adtab(t){['dash','stock','work','ads','lot','off','iss','top','oth'].forEach(function(x){$q('ad-'+x).hidden=x!=t});
  [].forEach.call(document.querySelectorAll('#ad .adn a[data-t]'),function(a){a.classList.toggle('on',a.dataset.t==t)});
- if(t=='dash')dash();else if(t=='stock')stockUI();else if(t=='ads')adsUI();else if(t=='lot')lotUI();else if(t=='off')offUI();else if(t=='iss')issUI();else if(t=='top')window.gxTop();else if(t=='oth')window.gxOth();else workUI()}
+ if(t=='dash')dash();else if(t=='stock')stockUI();else if(t=='ads')adsUI();else if(t=='lot'){lotInit();lotUI()}else if(t=='off')offUI();else if(t=='iss')issUI();else if(t=='top')window.gxTop();else if(t=='oth')window.gxOth();else workUI()}
 function openAD(){fillPL();$q('ad').classList.add('o');adtab('dash');issBadge();spBadge();lotInit();if(window._spt)clearInterval(window._spt);window._spt=setInterval(function(){if($q('ad').classList.contains('o'))spBadge()},30000)}
 function dash(){var L=ld('gc_sale_admin'),td=new Date().toDateString(),S=stk(),T={mob:0,amt:0,on:0,of:0},CA={mob:0,acc:0,rep:0},days={},st=0,od=0,ol=[];
  L.forEach(function(s){var k=new Date(s.d).toDateString(),q=0;s.it.forEach(function(i){if(isMob(i))q+=i.q;if(k==td)CA[catOf(i)]+=i.q*i.p});days[k]=(days[k]||0)+q;if(k==td){T.mob+=q;T.amt+=s.t;if(s.m=='online')T.on++;else T.of++}});
