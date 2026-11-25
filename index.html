@@ -919,7 +919,7 @@ document.querySelectorAll('.ti').forEach(function(e){var k=e.dataset.s;e.innerHT
      Video upload (optional): enable Firebase Storage, FIREBASE_CONFIG needs storageBucket, Storage rule: match /offers/{f} { allow read: if true; allow write: if request.auth.token.email=='ADMIN_EMAIL_YAHAN'; }
      Also enable Authentication > Sign-in method: Email/Password AND Phone, and add your site domain under Authorized domains.
    ===================================================================== */
-var ADMIN_OTP=true; /* true = login OTP admin panel (🔔 Login OTP) me aata hai, admin customer ke WhatsApp par bhejta hai */
+var ADMIN_OTP=false; /* true = login OTP admin panel (🔔 Login OTP) me aata hai, admin customer ke WhatsApp par bhejta hai */
 var OTP_API=''; /* OTP (WhatsApp) server ka URL, jaise 'https://otp.aapki-site.com'. Sirf URL hai, koi key/secret yahan nahi likhni. Setup: otp-server/README.md */
 var FIREBASE_CONFIG={apiKey:"AIzaSyAn4eLvBywDTz8HmbdNyOGBogARdfiKWHo",authDomain:"geeta-communication.firebaseapp.com",projectId:"geeta-communication",storageBucket:"geeta-communication.firebasestorage.app",messagingSenderId:"794027181906",appId:"1:794027181906:web:48eab06ace48c6c6405c8b",measurementId:"G-D73ZFBNN2X"}; /* e.g. {apiKey:"...",authDomain:"...",projectId:"..."} */
 var ADMIN_PIN_HASH=183386712396135;    /* default PIN is 1234 - change it (see PIN badalna in the admin panel) */
